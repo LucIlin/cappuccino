@@ -1,7 +1,7 @@
 # .gitignore file created for free with Tower (https://www.git-tower.com/)
 # For suggestions or improvements please contact us using support@git-tower.com
 # Generated on 2026-02-15
-# Includes: python, dotnet
+# Includes: python, csharp, dotnet, rider, pycharm
 
 ### Universal ###
 # Common files that should be ignored in all projects
@@ -158,6 +158,14 @@ profile_default/
 
 site/
 
+### Csharp ###
+# csharp specific files
+
+bin/
+obj/
+*.user
+*.suo
+
 ### Dotnet ###
 # .NET build outputs and development files
 
@@ -189,3 +197,60 @@ TestResults/
 [Bb]in/
 [Dd]ebug/
 [Rr]elease/
+
+### Rider ###
+# rider editor specific files
+
+# Rider
+.idea/
+*.iws
+*.iml
+*.ipr
+
+.idea_modules/
+out/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+.idea/.idea.*
+.idea/indexLayout.xml
+.idea/contentModel.xml
+.idea/modules.xml
+.idea/rider.project.restore.info
+
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+.idea/shelf/
+.idea/config/
+
+riderModule.iml
+
+### Pycharm ###
+# pycharm editor specific files
+
+# PyCharm
+.idea/
+*.iws
+*.iml
+*.ipr
+
+.idea_modules/
+out/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/datasources.xml
+
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/inspectionProfiles/
+

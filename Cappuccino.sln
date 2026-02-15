@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agent.WebToolkit.Api", "Agent.WebToolkit.Api\Agent.WebToolkit.Api.csproj", "{82D2C9E4-B3EE-407A-A205-D3F16CF62B33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{82D2C9E4-B3EE-407A-A205-D3F16CF62B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
