@@ -1,0 +1,6 @@
+@Agent.WebToolkit.Api_HostAddress = http://localhost:5013
+
+GET {{Agent.WebToolkit.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
