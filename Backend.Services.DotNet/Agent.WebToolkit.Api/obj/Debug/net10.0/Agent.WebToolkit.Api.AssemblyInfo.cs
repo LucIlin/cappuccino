@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Agent.WebToolkit.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef9120e50509e4caa33d9a6c6519fa2463cb7bb1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c78863dc3f620ce60f278ae8bebcf1a6443641f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Agent.WebToolkit.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Agent.WebToolkit.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
