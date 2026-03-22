@@ -254,3 +254,23 @@ out/
 .idea/uiDesigner.xml
 .idea/inspectionProfiles/
 
+# Ignore draw.io autosave/temp files
+docs/*.drawio.bkp
+docs/*.drawio.tmp
+docs/*.drawio.dtmp
+
+# Ignore exported images 
+docs/*.png
+docs/*.jpg
+docs/*.jpeg
+docs/*.svg
+docs/*.pdf
+
+# Ignore draw.io lock files (sometimes created in shared environments)
+docs/~$*.drawio
+
+# Optional: ignore all exports in a subfolder
+docs/exports/
+
+# But keep the source diagrams
+!docs/*.drawio
