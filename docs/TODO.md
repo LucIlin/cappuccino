@@ -2,5 +2,6 @@
 
 ## Categories
 ### Agents
-- [ ] Switch to new Microsoft Agent Framework.
+- [X] Switch to new Microsoft Agent Framework.
 - [ ] Implement a connection with LLM api.
+- [ ] Add configuration builder to Worker project.
