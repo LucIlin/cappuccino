@@ -4,4 +4,4 @@
 ### Agents
 - [X] Switch to new Microsoft Agent Framework.
 - [ ] Implement a connection with LLM api.
-- [ ] Add configuration builder to Worker project.
+- [X] Add configuration builder to Worker project.
