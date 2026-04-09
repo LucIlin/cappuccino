@@ -1,7 +1,3 @@
-using Worker;
-using Microsoft.Agents.AI;
-using OpenAI;
-
 using Worker.Settings;
 using Worker.Workers;
 
@@ -11,7 +7,7 @@ builder.Services.Configure<LLMConfiguration>(
     builder.Configuration.GetSection(nameof(LLMConfiguration))
 );
 
-builder.Services.AddHostedService<OpenAITestWorker>();
+builder.Services.AddHostedService<LocalOllamaTestWorker>();
 
 var host = builder.Build();
 
