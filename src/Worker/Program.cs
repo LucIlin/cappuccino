@@ -11,7 +11,7 @@ builder.Services.Configure<LLMConfiguration>(
     builder.Configuration.GetSection(nameof(LLMConfiguration))
 );
 
-builder.Services.AddHostedService<TestAgentWorker>();
+builder.Services.AddHostedService<OpenAITestWorker>();
 
 var host = builder.Build();
 

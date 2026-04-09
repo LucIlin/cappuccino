@@ -8,12 +8,12 @@ using Worker.Settings;
 
 namespace Worker.Workers;
 
-public class TestAgentWorker : BackgroundService
+public class OpenAITestWorker : BackgroundService
 {
     private readonly LLMProfile _llmProfile;
     private static readonly string _profile = "TestProfile";
     
-    public TestAgentWorker(IOptions<LLMConfiguration> llmConfiguration)
+    public OpenAITestWorker(IOptions<LLMConfiguration> llmConfiguration)
     {
         _llmProfile = llmConfiguration.Value.GetProfile(_profile);
     }
