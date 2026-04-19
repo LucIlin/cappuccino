@@ -9,6 +9,10 @@
 ### Infrastructure
 - [X] Download Ollama locally and set up endpoint with project.
 
+### Nice to have's (for now)
+- [ ] Allow agents to reason about and pick LLMProfile from requirement.
+- [ ] Create Github Action to transform YAML Authoring format to JSON wire format.
+
 ### Phase 1 - Get an agent to reason about a website.
 - Goals
   - Discover the capabilities and limits of a single agent lookup on a website.
