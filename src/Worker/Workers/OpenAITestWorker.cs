@@ -1,10 +1,9 @@
 using System.ClientModel;
-
+using Agents.LLM;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.Options;
 using OpenAI;
 using OpenAI.Chat;
-using Worker.Settings;
 
 namespace Worker.Workers;
 

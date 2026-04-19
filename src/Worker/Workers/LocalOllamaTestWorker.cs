@@ -1,5 +1,5 @@
+using Agents.LLM;
 using Microsoft.Extensions.Options;
-using Worker.Settings;
 using OllamaSharp;
 
 namespace Worker.Workers;

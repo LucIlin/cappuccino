@@ -1,4 +1,4 @@
-namespace Worker.Settings;
+namespace Agents.LLM;
 
 public class LLMProfile
 {

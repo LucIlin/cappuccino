@@ -1,4 +1,4 @@
-using Worker.Settings;
+using Agents.LLM;
 using Worker.Workers;
 
 var builder = Host.CreateApplicationBuilder(args);
