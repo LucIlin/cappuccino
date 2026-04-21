@@ -258,6 +258,7 @@ out/
 docs/*.drawio.bkp
 docs/*.drawio.tmp
 docs/*.drawio.dtmp
+docs/*.drawio
 
 # Ignore exported images 
 docs/*.png
