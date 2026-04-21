@@ -20,8 +20,8 @@ public class ChatClientFactory
 
     public IChatClient Create(LLMProfile profile)
     {
-        if (!_builders.TryGetValue(profile.Name, out var builder))
-             throw new InvalidOperationException($"Invalid profile identifier: {profile.Name}");
+        if (!_builders.TryGetValue(profile.ChatClient, out var builder))
+             throw new InvalidOperationException($"Invalid profile identifier: {profile.ChatClient}");
         return builder(profile);
     }
 

@@ -15,11 +15,11 @@ var llmConfiguration = builder.Configuration
 var chatClientFactory = ChatClientFactory.BuildFactory(factory =>
 {
     factory.Register(
-        "OllamaLocalTest",
+        "ollama_local_dev",
         profile => new OllamaApiClient(new Uri(profile.BaseUrl), profile.Model));
     
     factory.Register(
-        "OpenAITest",
+        "openai_api_dev",
         profile => new OpenAIClient(new ApiKeyCredential(profile.ApiKey))
             .GetChatClient(profile.Model)
             .AsIChatClient());

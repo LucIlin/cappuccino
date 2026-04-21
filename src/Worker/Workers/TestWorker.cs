@@ -7,7 +7,7 @@ public class TestWorker : BackgroundService
 {
     private readonly LLMConfiguration _llmConfigs;
     private readonly ChatClientFactory _chatClientFactory;
-    private static readonly string _profile = "LocalOllamaTest";
+    private static readonly string _profile = "ollama_local_llama3.1-8b";
 
     public TestWorker(
         LLMConfiguration llmConfigs,
