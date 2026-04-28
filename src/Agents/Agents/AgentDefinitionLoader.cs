@@ -15,7 +15,7 @@ namespace Agents.Agents;
 public static class AgentDefinitionLoader
 {
     private static readonly string AgentsDirectory =
-        Path.Combine(AppContext.BaseDirectory, "Agents");
+        Path.Combine(AppContext.BaseDirectory, "Agents/Definitions");
     public static string Load(string agentName)
     {
         var jsonPath = Path.Combine(AgentsDirectory, $"{agentName}.json");

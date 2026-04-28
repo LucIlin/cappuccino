@@ -1,4 +1,4 @@
-kind: prompt
+kind: Prompt
 name: Extractor
 description: Extracts intent and entities from raw user input
 instructions: |
@@ -17,7 +17,7 @@ instructions: |
   Do not include any text outside of the JSON object.
 model: 
   options:
-    temperature: 0.1
+    temperature: 0.5
 outputSchema:
   properties:
     intent:
