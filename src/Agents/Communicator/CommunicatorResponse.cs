@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
+using Agents.Shared;
 
-namespace Agents.Shared;
+namespace Agents.Communicator;
 
 public sealed class CommunicatorResponse
 {

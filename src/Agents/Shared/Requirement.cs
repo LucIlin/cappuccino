@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Agents.Communicator;
+namespace Agents.Shared;
 
 public sealed class Requirement
 {
