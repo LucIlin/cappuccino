@@ -2,7 +2,7 @@ namespace Agents.Agents;
 
 /// <summary>
 /// Loads agent definition files from <c>AgentsDirectory</c>, which resolves to
-/// <c>{AppContext.BaseDirectory}/Agents/</c> (i.e. an <c>Agents/</c> subfolder inside the
+/// <c>{AppContext.BaseDirectory}/Definitions/</c> (i.e. an <c>Agents/</c> subfolder inside the
 /// build output directory). Agent definitions are expected to be copied there during build —
 /// see the <c>.csproj</c> glob that includes <c>**/*.yaml</c> files.
 ///
@@ -15,7 +15,7 @@ namespace Agents.Agents;
 public static class AgentDefinitionLoader
 {
     private static readonly string AgentsDirectory =
-        Path.Combine(AppContext.BaseDirectory, "Agents/Definitions");
+        Path.Combine(AppContext.BaseDirectory, "Definitions");
     public static string Load(string agentName)
     {
         var jsonPath = Path.Combine(AgentsDirectory, $"{agentName}.json");
