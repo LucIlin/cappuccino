@@ -1,12 +1,45 @@
+using System.ClientModel;
+using Agents.Agents;
+using Agents.LLM;
+using Microsoft.Agents.AI;
+using Microsoft.Agents.AI.Hosting;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
+using OpenAI;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+var llmConfiguration = builder.Configuration
+                           .GetSection("LLMConfiguration")
+                           .Get<LLMConfiguration>()
+                       ?? throw new ArgumentNullException();
+
+var chatClientFactory = ChatClientFactory.BuildFactory(factory =>
+{
+    factory.Register(
+        "ollama_local_dev",
+        profile => new OllamaApiClient(new Uri(profile.BaseUrl), profile.Model));
+    
+    factory.Register(
+        "openai_api_dev",
+        profile => new OpenAIClient(new ApiKeyCredential(profile.ApiKey))
+            .GetChatClient(profile.Model)
+            .AsIChatClient());
+});
+
+var chatClient = chatClientFactory.Create(llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+var agentFactory = new ChatClientPromptAgentFactory(chatClient);
+
+var communicatorAgent = await agentFactory.CreateFromYamlAsync(AgentDefinitionLoader.Load("Communicator"));
+var communicatorHost = new AIHostAgent(communicatorAgent, new InMemoryAgentSessionStore());
+
+builder.Services.AddKeyedSingleton("Communicator",  communicatorHost);
+builder.Services.AddSingleton(llmConfiguration);
+builder.Services.AddSingleton(chatClientFactory);
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -14,28 +47,4 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
