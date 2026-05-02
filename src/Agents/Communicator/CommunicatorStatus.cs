@@ -3,8 +3,7 @@ namespace Agents.Communicator;
 public enum CommunicatorStatus
 {
     None,
-    Eliciting, // Still gathering the initial request
-    Refining, // List exists, iterating with user
-    AwaitingConfirmation, // Communicator has asked explicit yes/no
+    HasDetails, // Has details for the extractor to extract
+    Eliciting, // Still gathering the initial request, message dud
     Confirmed // User confirmed — ready to send downstream
 }

@@ -9,6 +9,4 @@ public sealed class CommunicatorResponse
     public string Message { get; set; } =  string.Empty;
     [JsonPropertyName("status")]
     public CommunicatorStatus Status  { get; set; } = CommunicatorStatus.None;
-    [JsonPropertyName("requirements")]
-    public List<Requirement> Requirements { get; set; } = [];
 }
