@@ -6,7 +6,9 @@ namespace Agents.Communicator;
 public sealed class CommunicatorResponse
 {
     [JsonPropertyName("message")]
-    public string Message { get; set; } =  string.Empty;
+    public string Message { get; init; } =  string.Empty;
     [JsonPropertyName("status")]
-    public CommunicatorStatus Status  { get; set; } = CommunicatorStatus.None;
+    public CommunicatorStatus Status  { get; init; } = CommunicatorStatus.None;
+    [JsonPropertyName("summary")]
+    public string? Summary { get; init; } = string.Empty;
 }
