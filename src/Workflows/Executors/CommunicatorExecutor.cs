@@ -30,7 +30,7 @@ public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicato
         await context.YieldOutputAsync(new UserFacingMessage(response.Result.Message));
         
         if (response.Result.Status == CommunicatorStatus.Confirmed)
-            await context.SendMessageAsync(
+            await context.YieldOutputAsync(
                 new CommunicatorResult(
                     response.Result.Summary
                     ?? throw new InvalidOperationException(
