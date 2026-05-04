@@ -1,8 +1,12 @@
 using System.ClientModel;
 using Agents.Agents;
 using Agents.LLM;
+using Api;
+using Workflows;
+using Workflows.Executors;
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Hosting;
+using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
 using OpenAI;
@@ -34,17 +38,26 @@ var communicatorAgent = await agentFactory.CreateFromYamlAsync(AgentDefinitionLo
 var communicatorHost = new AIHostAgent(communicatorAgent, new InMemoryAgentSessionStore());
 
 builder.Services.AddKeyedSingleton("Communicator",  communicatorHost);
+builder.Services.AddSingleton<CommunicatorExecutor>();
+builder.Services.AddSingleton<Workflow>(sp =>
+    NotificationWorkflow.Build( 
+        sp.GetRequiredService<CommunicatorExecutor>()));
 builder.Services.AddSingleton(llmConfiguration);
 builder.Services.AddSingleton(chatClientFactory);
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.MapChatEndpoints();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
+Console.WriteLine("test");
 app.UseHttpsRedirection();
 
 app.Run();

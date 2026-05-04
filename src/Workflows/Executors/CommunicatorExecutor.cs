@@ -4,14 +4,14 @@ using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.DependencyInjection;
 using Agents.Communicator;
 using Microsoft.Extensions.AI;
-using Workflow.Messages;
-using Workflow.Results;
+using Workflows.Messages;
+using Workflows.Results;
 
-namespace Workflow.Executors;
+namespace Workflows.Executors;
 
-[SendsMessage(typeof(UserFacingMessage))]
-[SendsMessage(typeof(CommunicatorResult))]
-internal sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIHostAgent agent) : Executor("Communicator")
+[YieldsOutput(typeof(UserFacingMessage))]
+[YieldsOutput(typeof(CommunicatorResult))]
+public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIHostAgent agent) : Executor("Communicator")
 {
     [MessageHandler]
     private async ValueTask HandleAsync(UserInput input, IWorkflowContext context)
