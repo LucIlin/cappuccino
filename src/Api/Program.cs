@@ -40,7 +40,7 @@ var communicatorHost = new AIHostAgent(communicatorAgent, new InMemoryAgentSessi
 builder.Services.AddKeyedSingleton("Communicator",  communicatorHost);
 builder.Services.AddSingleton<CommunicatorExecutor>();
 builder.Services.AddSingleton<Workflow>(sp =>
-    NotificationWorkflow.Build( 
+    CommunicationWorkflow.Build( 
         sp.GetRequiredService<CommunicatorExecutor>()));
 builder.Services.AddSingleton(llmConfiguration);
 builder.Services.AddSingleton(chatClientFactory);

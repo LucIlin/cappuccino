@@ -3,7 +3,7 @@ using Workflows.Executors;
 
 namespace Workflows;
 
-public static class NotificationWorkflow
+public static class CommunicationWorkflow
 {
     public static Workflow Build(CommunicatorExecutor communicator)
     {

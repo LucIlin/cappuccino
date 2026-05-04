@@ -12,6 +12,7 @@
 ### Nice to have's (for now)
 - [ ] Allow agents to reason about and pick LLMProfile from requirement.
 - [ ] Create Github Action to transform YAML Authoring format to JSON wire format.
+-  [ ] Run communicator streaming for UX latency issue
 
 ### Phase 1 - Get an agent to reason about a website.
 - Goals
