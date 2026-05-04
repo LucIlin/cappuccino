@@ -1,0 +1,23 @@
+### Create a conversation
+POST {{baseUrl}}/conversations
+
+> {%
+    client.global.set("conversationId", response.body.conversationId);
+%}
+
+### Send message to conversation
+POST {{baseUrl}}/conversations/{{conversationId}}/messages
+Content-Type: application/json
+
+{
+  "text": "notify me when Metallica plays in Stockholm"
+}
+
+> {%
+    response.body.onEachLine((line, unsubscribe) => {
+        if (line && line.startsWith("data:")) {
+            const text = line.substring(5).trim();
+            client.log(text);
+        }
+    });
+%}
