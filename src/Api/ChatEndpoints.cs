@@ -5,8 +5,6 @@ using Api.Requests;
 using Api.Tasks;
 using Microsoft.Agents.AI.Workflows;
 using Workflows.Messages;
-using Microsoft.AspNetCore.OpenApi;
-using Workflows.Results;
 
 namespace Api;
 
@@ -45,7 +43,7 @@ public static class ChatEndpoints
                         await response.WriteAsync($"data: {JsonSerializer.Serialize(msg.Text)}\n\n", ct);
                         await response.Body.FlushAsync(ct);
                         break;
-                    case WorkflowOutputEvent { Data: CommunicatorResult result}:
+                    case WorkflowOutputEvent { Data: MonitoringRequest result}:
                         await fulfillmentChannel.Writer.WriteAsync(
                         new ErrandFulfillmentTask(conversationId, result), ct);
                         break;

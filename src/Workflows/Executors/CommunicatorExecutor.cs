@@ -5,12 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Agents.Communicator;
 using Microsoft.Extensions.AI;
 using Workflows.Messages;
-using Workflows.Results;
 
 namespace Workflows.Executors;
 
 [YieldsOutput(typeof(UserFacingMessage))]
-[YieldsOutput(typeof(CommunicatorResult))]
+[YieldsOutput(typeof(MonitoringRequest))]
 public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIHostAgent agent) : Executor("Communicator")
 {
     [MessageHandler]
@@ -31,7 +30,7 @@ public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicato
         
         if (response.Result.Status == CommunicatorStatus.Confirmed)
             await context.YieldOutputAsync(
-                new CommunicatorResult(
+                new MonitoringRequest(
                     response.Result.Summary
                     ?? throw new InvalidOperationException(
                         "Communicator returned a confirmed response with null Summary")));
