@@ -1,9 +1,12 @@
 using System.Text.Json;
+using System.Threading.Channels;
 using Api.Responses;
 using Api.Requests;
+using Api.Tasks;
 using Microsoft.Agents.AI.Workflows;
 using Workflows.Messages;
-using Microsoft.AspNetCore.OpenApi;                                                                                                 
+using Microsoft.AspNetCore.OpenApi;
+using Workflows.Results;
 
 namespace Api;
 
@@ -18,6 +21,7 @@ public static class ChatEndpoints
             string conversationId,
             SendMessageRequest request,
             Workflow workflow,
+            Channel<ErrandFulfillmentTask> fulfillmentChannel,
             HttpResponse response,
             CancellationToken ct) =>
         {
@@ -34,11 +38,18 @@ public static class ChatEndpoints
             await foreach (WorkflowEvent evt in run.WatchStreamAsync().WithCancellation(ct))
             {
                 Console.WriteLine($"[Event] Type: {evt.GetType().Name} | Data: {evt.Data?.GetType().Name ?? "null"}");
-                
-                if (evt is WorkflowOutputEvent { Data: UserFacingMessage msg })
+
+                switch (evt)
                 {
-                    await response.WriteAsync($"data: {JsonSerializer.Serialize(msg.Text)}\n\n", ct);
-                    await response.Body.FlushAsync(ct);
+                    case WorkflowOutputEvent { Data: UserFacingMessage msg }:
+                        await response.WriteAsync($"data: {JsonSerializer.Serialize(msg.Text)}\n\n", ct);
+                        await response.Body.FlushAsync(ct);
+                        break;
+                    case WorkflowOutputEvent { Data: CommunicatorResult result}:
+                        await fulfillmentChannel.Writer.WriteAsync(
+                        new ErrandFulfillmentTask(conversationId, result), ct);
+                        break;
+                        
                 }
             }
         }).Produces<string>(200, "text/event-stream");

@@ -1,7 +1,9 @@
 using System.ClientModel;
+using System.Threading.Channels;
 using Agents.Agents;
 using Agents.LLM;
 using Api;
+using Api.Tasks;
 using Workflows;
 using Workflows.Executors;
 using Microsoft.Agents.AI;
@@ -44,6 +46,8 @@ builder.Services.AddSingleton<Workflow>(sp =>
         sp.GetRequiredService<CommunicatorExecutor>()));
 builder.Services.AddSingleton(llmConfiguration);
 builder.Services.AddSingleton(chatClientFactory);
+builder.Services.AddSingleton(Channel.CreateUnbounded<ErrandFulfillmentTask>(
+    new UnboundedChannelOptions { SingleReader = true }));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -57,7 +61,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-Console.WriteLine("test");
 app.UseHttpsRedirection();
 
 app.Run();
