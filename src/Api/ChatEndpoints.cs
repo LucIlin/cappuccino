@@ -19,7 +19,7 @@ public static class ChatEndpoints
             string conversationId,
             SendMessageRequest request,
             Workflow workflow,
-            Channel<ErrandFulfillmentTask> fulfillmentChannel,
+            Channel<MonitoringTask> fulfillmentChannel,
             HttpResponse response,
             CancellationToken ct) =>
         {
@@ -45,7 +45,7 @@ public static class ChatEndpoints
                         break;
                     case WorkflowOutputEvent { Data: MonitoringRequest result}:
                         await fulfillmentChannel.Writer.WriteAsync(
-                        new ErrandFulfillmentTask(conversationId, result), ct);
+                        new MonitoringTask(conversationId, result), ct);
                         break;
                         
                 }

@@ -3,11 +3,11 @@ using Api.Tasks;
 
 namespace Api.Workers;
 
-public class ErrandFulfillmentWorker : BackgroundService
+public class MonitoringWorker : BackgroundService
 {
-    private readonly Channel<ErrandFulfillmentTask> _channel;
+    private readonly Channel<MonitoringTask> _channel;
 
-    public ErrandFulfillmentWorker(Channel<ErrandFulfillmentTask> channel)
+    public MonitoringWorker(Channel<MonitoringTask> channel)
     {
         _channel = channel;
     }
@@ -18,7 +18,7 @@ public class ErrandFulfillmentWorker : BackgroundService
             _ = ProcessFulfillmentAsync(task, stoppingToken);
     }
 
-    private async Task ProcessFulfillmentAsync(ErrandFulfillmentTask task, CancellationToken stoppingToken)
+    private async Task ProcessFulfillmentAsync(MonitoringTask task, CancellationToken stoppingToken)
     {
         Console.WriteLine($"Fulfillment task started {task.Task}");
     }

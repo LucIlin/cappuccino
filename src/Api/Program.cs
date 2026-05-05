@@ -46,7 +46,7 @@ builder.Services.AddSingleton<Workflow>(sp =>
         sp.GetRequiredService<CommunicatorExecutor>()));
 builder.Services.AddSingleton(llmConfiguration);
 builder.Services.AddSingleton(chatClientFactory);
-builder.Services.AddSingleton(Channel.CreateUnbounded<ErrandFulfillmentTask>(
+builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
     new UnboundedChannelOptions { SingleReader = true }));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
