@@ -28,7 +28,7 @@ public static class ChatEndpoints
             
             await using StreamingRun run = await InProcessExecution.RunStreamingAsync(
                 workflow,
-                new UserInput(request.Text, conversationId),
+                new UserInput(request.Text, conversationId, request.History),
                 cancellationToken :ct);
 
             await run.TrySendMessageAsync(new TurnToken(emitEvents: true));

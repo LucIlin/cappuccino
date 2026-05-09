@@ -1,5 +1,4 @@
 using Microsoft.Agents.AI;
-using Microsoft.Agents.AI.Hosting;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.DependencyInjection;
 using Agents.Communicator;
@@ -10,18 +9,16 @@ namespace Workflows.Executors;
 
 [YieldsOutput(typeof(UserFacingMessage))]
 [YieldsOutput(typeof(MonitoringRequest))]
-public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIHostAgent agent) : Executor("Communicator")
+public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIAgent agent) : Executor("Communicator")
 {
     [MessageHandler]
     private async ValueTask HandleAsync(UserInput input, IWorkflowContext context)
     {
-        AgentSession session = await agent.GetOrCreateSessionAsync(input.ConversationId);
-        
-        AgentResponse<CommunicatorResponse> response = await agent.RunAsync<CommunicatorResponse>(
-            new ChatMessage(ChatRole.User, input.Text),
-            session);
-        
-        await agent.SaveSessionAsync(input.ConversationId, session);
+        var messages = input.History
+            .Select(m => new ChatMessage(new ChatRole(m.Role), m.Content))
+            .Append(new ChatMessage(ChatRole.User, input.Text)); // Append newest message
+            
+        AgentResponse<CommunicatorResponse> response = await agent.RunAsync<CommunicatorResponse>(messages);
 
         if (response.Result.Status == CommunicatorStatus.None)
             throw new InvalidOperationException(

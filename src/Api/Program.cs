@@ -1,6 +1,6 @@
 using System.ClientModel;
 using System.Threading.Channels;
-using Agents.Agents;
+using Agents;
 using Agents.LLM;
 using Api;
 using Api.Tasks;
@@ -33,19 +33,18 @@ var chatClientFactory = ChatClientFactory.BuildFactory(factory =>
             .AsIChatClient());
 });
 
-var chatClient = chatClientFactory.Create(llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
-var agentFactory = new ChatClientPromptAgentFactory(chatClient);
+var agentBuilder = new AgentBuilder(chatClientFactory);
 
-var communicatorAgent = await agentFactory.CreateFromYamlAsync(AgentDefinitionLoader.Load("Communicator"));
-var communicatorHost = new AIHostAgent(communicatorAgent, new InMemoryAgentSessionStore());
+var communicator = await agentBuilder.BuildAsync(
+    "Communicator",
+    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
 
-builder.Services.AddKeyedSingleton("Communicator",  communicatorHost);
-builder.Services.AddSingleton<CommunicatorExecutor>();
-builder.Services.AddSingleton<Workflow>(sp =>
-    CommunicationWorkflow.Build( 
-        sp.GetRequiredService<CommunicatorExecutor>()));
-builder.Services.AddSingleton(llmConfiguration);
-builder.Services.AddSingleton(chatClientFactory);
+var analyst = await agentBuilder.BuildAsync(
+    "Analyst",
+    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+
+builder.Services.AddKeyedSingleton("Communicator", communicator);
+builder.Services.AddKeyedSingleton("Analyst", analyst);
 builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
     new UnboundedChannelOptions { SingleReader = true }));
 builder.Services.AddEndpointsApiExplorer();

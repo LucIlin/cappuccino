@@ -5,6 +5,7 @@
 - [X] Switch to new Microsoft Agent Framework.
 - [X] Implement a connection with LLM api.
 - [X] Add configuration builder to Worker project.
+-  [ ] Fix Memory Accumulation in AgenstSessionStore.
 
 ### Infrastructure
 - [X] Download Ollama locally and set up endpoint with project.
@@ -12,7 +13,7 @@
 ### Nice to have's (for now)
 - [ ] Allow agents to reason about and pick LLMProfile from requirement.
 - [ ] Create Github Action to transform YAML Authoring format to JSON wire format.
--  [ ] Run communicator streaming for UX latency issue
+[ ] Run communicator streaming for UX latency issue
 
 ### Phase 1 - Get an agent to reason about a website.
 - Goals

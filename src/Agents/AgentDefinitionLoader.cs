@@ -1,4 +1,4 @@
-namespace Agents.Agents;
+namespace Agents;
 
 /// <summary>
 /// Loads agent definition files from <c>AgentsDirectory</c>, which resolves to
