@@ -1,8 +1,8 @@
-using Agents.Agents;
+
+using Agents;
 using Agents.Communicator;
 using Agents.LLM;
 using Microsoft.Agents.AI;
-using Microsoft.Extensions.AI;
 
 namespace Worker.Workers;
 

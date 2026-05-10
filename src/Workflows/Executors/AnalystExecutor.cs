@@ -1,6 +1,5 @@
 using Agents.Analyst;
 using Microsoft.Agents.AI;
-using Microsoft.Agents.AI.Hosting;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,7 @@ namespace Workflows.Executors;
 [YieldsOutput(typeof(BrowserMonitoringPath))]
 [YieldsOutput(typeof(ThirdPartyMonitoringPath))]
 [YieldsOutput(typeof(UnresolvableMonitoringPath))]
-public sealed partial class AnalystExecutor([FromKeyedServices("Analyst")] AIAgent agent) : Executor("Analyst")
+public sealed partial class AnalystExecutor(AIAgent agent) : Executor("Analyst")
 {
     [MessageHandler]
     private async ValueTask HandleAsync(MonitoringRequest request, IWorkflowContext context)

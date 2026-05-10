@@ -2,8 +2,10 @@ using System.Text.Json;
 using System.Threading.Channels;
 using Api.Responses;
 using Api.Requests;
-using Api.Tasks;
+using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
+using Shared.Grpc;
+using Workflows;
 using Workflows.Messages;
 
 namespace Api;
@@ -18,13 +20,15 @@ public static class ChatEndpoints
         routes.MapPost("/conversations/{conversationId}/messages", async (
             string conversationId,
             SendMessageRequest request,
-            Workflow workflow,
-            Channel<MonitoringTask> fulfillmentChannel,
+            [FromKeyedServices("Communicator")] AIAgent communicator,
+            FulfillmentService.FulfillmentServiceClient fulfillmentClient,
             HttpResponse response,
             CancellationToken ct) =>
         {
             response.Headers.ContentType = "text/event-stream";
             response.Headers.CacheControl = "no-cache";
+            
+            var workflow = CommunicationWorkflow.Build(communicator);
             
             await using StreamingRun run = await InProcessExecution.RunStreamingAsync(
                 workflow,
@@ -44,8 +48,13 @@ public static class ChatEndpoints
                         await response.Body.FlushAsync(ct);
                         break;
                     case WorkflowOutputEvent { Data: MonitoringRequest result}:
-                        await fulfillmentChannel.Writer.WriteAsync(
-                        new MonitoringTask(conversationId, result), ct);
+                        await fulfillmentClient.SubmitMonitoringRequestAsync(
+                            new SubmitMonitoringRequestMessage
+                            {
+                                ConversationId = conversationId,
+                                Description = result.Description,
+                            },
+                            cancellationToken: ct);
                         break;
                         
                 }

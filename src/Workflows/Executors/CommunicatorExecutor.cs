@@ -9,7 +9,7 @@ namespace Workflows.Executors;
 
 [YieldsOutput(typeof(UserFacingMessage))]
 [YieldsOutput(typeof(MonitoringRequest))]
-public sealed partial class CommunicatorExecutor([FromKeyedServices("Communicator")]AIAgent agent) : Executor("Communicator")
+public sealed partial class CommunicatorExecutor(AIAgent agent) : Executor("Communicator")
 {
     [MessageHandler]
     private async ValueTask HandleAsync(UserInput input, IWorkflowContext context)

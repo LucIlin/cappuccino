@@ -5,19 +5,18 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
+    
     <ItemGroup>
-      <PackageReference Include="Microsoft.Agents.AI.Hosting" Version="1.5.0-preview.260507.1" />
-      <PackageReference Include="Microsoft.Agents.AI.Workflows" Version="1.5.0" />
-      <PackageReference Include="Microsoft.Agents.AI.Workflows.Generators" Version="1.5.0">
+        <Protobuf Include="Protos/fulfillment.proto" GrpcServices="Both"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Google.Protobuf" Version="3.35.0-rc2" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.80.0" />
+      <PackageReference Include="Grpc.Tools" Version="2.80.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Shared\Shared.csproj" />
-      <ProjectReference Include="..\Agents\Agents.csproj" />
     </ItemGroup>
 
 </Project>

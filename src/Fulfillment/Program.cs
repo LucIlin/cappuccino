@@ -1,11 +1,12 @@
 using System.ClientModel;
-using Agents;
+using System.Threading.Channels;
 using Agents.LLM;
-using Api;
+using Agents;
+using Fulfillment.Services;
+using Fulfillment.Tasks;
 using Microsoft.Extensions.AI;
 using OllamaSharp;
 using OpenAI;
-using Shared.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,31 +30,19 @@ var chatClientFactory = ChatClientFactory.BuildFactory(factory =>
 
 var agentBuilder = new AgentBuilder(chatClientFactory);
 
-var communicator = await agentBuilder.BuildAsync(
-    "Communicator",
+var analyst = agentBuilder.BuildAsync(
+    "Analyst",
     llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
 
-builder.Services.AddGrpcClient<FulfillmentService.FulfillmentServiceClient>(o =>
-{
-    o.Address = new Uri(
-        builder.Configuration["FulfillmentGrpc:Address"]
-        ?? "http://localhost:5014");
-});
+builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
+    new UnboundedChannelOptions { SingleReader = true }));
 
-builder.Services.AddKeyedSingleton("Communicator", communicator);
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Add services to the container.
+builder.Services.AddGrpc();
+builder.Services.AddKeyedSingleton("Analyst", analyst);
 
 var app = builder.Build();
 
-app.MapChatEndpoints();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+app.MapGrpcService<FulfillmentGrpcService>();
 
 app.Run();

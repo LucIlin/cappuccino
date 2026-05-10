@@ -5,7 +5,8 @@
 - [X] Switch to new Microsoft Agent Framework.
 - [X] Implement a connection with LLM api.
 - [X] Add configuration builder to Worker project.
--  [ ] Fix Memory Accumulation in AgenstSessionStore.
+- [ ] Fix Memory Accumulation in AgenstSessionStore.
+- [ ] Explore AddKeydChatClient() to replace ChatClientFactory.
 
 ### Infrastructure
 - [X] Download Ollama locally and set up endpoint with project.
