@@ -2,15 +2,14 @@ using Agents.Analyst;
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
-using Microsoft.Extensions.DependencyInjection;
 using Workflows.Messages;
 using Workflows.Paths;
 
 namespace Workflows.Executors;
 
-[YieldsOutput(typeof(ApiMonitoringPath))]
-[YieldsOutput(typeof(BrowserMonitoringPath))]
-[YieldsOutput(typeof(ThirdPartyMonitoringPath))]
+[SendsMessage(typeof(ApiMonitoringPath))]
+[SendsMessage(typeof(BrowserMonitoringPath))]
+[SendsMessage(typeof(ThirdPartyMonitoringPath))]
 [YieldsOutput(typeof(UnresolvableMonitoringPath))]
 public sealed partial class AnalystExecutor(AIAgent agent) : Executor("Analyst")
 {
@@ -19,7 +18,7 @@ public sealed partial class AnalystExecutor(AIAgent agent) : Executor("Analyst")
     {
         AgentResponse<AnalystResponse> response =
             await agent.RunAsync<AnalystResponse>(request.Description);
-        
+
         if (response.Result.PathType == MonitoringPathType.None)
             throw new InvalidOperationException("Analyst returned a response with no path type set");
 
@@ -57,6 +56,9 @@ public sealed partial class AnalystExecutor(AIAgent agent) : Executor("Analyst")
                 $"Analyst returned unknown path type: {response.Result.PathType}")
         };
 
-        await context.YieldOutputAsync(path);
+        if (path is UnresolvableMonitoringPath)
+            await context.YieldOutputAsync(path);
+        else
+            await context.SendMessageAsync(path);
     }
 }

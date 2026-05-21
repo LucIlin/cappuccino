@@ -33,6 +33,9 @@ var agentBuilder = new AgentBuilder(chatClientFactory);
 var analyst = agentBuilder.BuildAsync(
     "Analyst",
     llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+var apiProvisioner = agentBuilder.BuildAsync(
+    "ApiProvisioner",
+    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
 
 builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
     new UnboundedChannelOptions { SingleReader = true }));
@@ -40,6 +43,7 @@ builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddKeyedSingleton("Analyst", analyst);
+builder.Services.AddKeyedSingleton("ApiProvisioner", apiProvisioner);
 
 var app = builder.Build();
 
