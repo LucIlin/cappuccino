@@ -32,10 +32,10 @@ var agentBuilder = new AgentBuilder(chatClientFactory);
 
 var analyst = agentBuilder.BuildAsync(
     "Analyst",
-    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+    llmConfiguration.GetProfile("openai_api_gpt-5.4"));
 var apiProvisioner = agentBuilder.BuildAsync(
     "ApiProvisioner",
-    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+    llmConfiguration.GetProfile("openai_api_gpt-5.4"));
 
 builder.Services.AddSingleton(Channel.CreateUnbounded<MonitoringTask>(
     new UnboundedChannelOptions { SingleReader = true }));

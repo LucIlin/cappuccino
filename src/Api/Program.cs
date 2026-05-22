@@ -31,7 +31,7 @@ var agentBuilder = new AgentBuilder(chatClientFactory);
 
 var communicator = await agentBuilder.BuildAsync(
     "Communicator",
-    llmConfiguration.GetProfile("openai_api_gpt-5-nano"));
+    llmConfiguration.GetProfile("openai_api_gpt-5.4"));
 
 builder.Services.AddGrpcClient<FulfillmentService.FulfillmentServiceClient>(o =>
 {

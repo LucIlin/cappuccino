@@ -18,7 +18,7 @@ public sealed class FulfillmentGrpcService(
         var task = new MonitoringTask(request.ConversationId, request.Description);
         var accepted = channel.Writer.TryWrite(task);
 
-        if (accepted)
+        if (!accepted)
         {
             logger.LogWarning(
                 "Monitoring channel rejected task for conversation {Id}",

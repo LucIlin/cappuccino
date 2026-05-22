@@ -10,5 +10,30 @@ POST {{baseUrl}}/conversations/{{conversationId}}/messages
 Content-Type: application/json
 
 {
-  "text": "notify me when Metallica plays in Stockholm"
+  "text": "Notify me when Metallica plays any upcoming show in Stockholm, Sweden, in any venue.",
+  "history": []
 }
+
+> {%
+    response.body.onEachLine((line, unsubscribe) => {
+        client.log(line);
+    });
+%}
+
+### Follow-up message
+POST {{baseUrl}}/conversations/{{conversationId}}/messages
+Content-Type: application/json
+
+{
+  "text": "Yes",
+  "history": [
+    {"role": "user", "content": "Notify me when Metallica plays any upcoming show in Stockholm, Sweden, in any venue."},
+    {"role": "assistant", "content": "Noted: you want a notification for any Metallica show announced in Stockholm, Sweden, at any venue. Trigger would be when a Stockholm show is announced."}
+  ]
+}
+
+> {%
+    response.body.onEachLine((line, unsubscribe) => {
+        client.log(line);
+    });
+%}
